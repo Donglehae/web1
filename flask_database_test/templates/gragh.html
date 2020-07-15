@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- <html lang="en" style="height: 100%"> -->
+<!-- href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" -->
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>부트스트랩 차트그리기</title>
+  <link rel="stylesheet" href="../static/css/gragh.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <!-- 차트 링크 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+</head>
+
+<body>
+
+  <div class="section" style="display: grid; margin-bottom: 10px; grid-template-columns: 3fr 1fr 1fr 1fr; border: 4px solid black;">
+    <input type="image" id="banner" src="../static/img/banner.png" style="display: inline; width: 100%; border: 2px solid black;" onclick="
+      document.querySelector('#first_chart').style.display='inline';
+      document.querySelector('#second_chart').style.display='inline';
+      document.querySelector('#third_chart').style.display='inline';
+      document.querySelector('#fourth_chart').style.display='inline';
+      document.querySelector('#first_fullsize').style.display='none';
+      document.querySelector('#second_fullsize').style.display='none';
+      document.querySelector('#third_fullsize').style.display='none';
+      document.querySelector('#fourth_fullsize').style.display='none';">
+    <h1 style="border: 2px solid black; margin: 0;">○○월</h1>
+    <h1 style="border: 2px solid black; margin: 0;">마스크 미착용</h1>
+    <h1 style="border: 2px solid black; margin: 0;">고열자</h1>
+  </div>
+
+  <div class="section" style="display: grid; grid-template-columns: 1fr 1fr; ">
+    <div class="vedio" style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; border: 4px solid blue;">
+      <input type="image" id="first_cam" src="../static/img/cctv.jpg" style="display: inline; width: 100%; border: 2px solid black;" onclick="
+        document.querySelector('#first_chart').style.display='none';
+        document.querySelector('#second_chart').style.display='none';
+        document.querySelector('#third_chart').style.display='none';
+        document.querySelector('#fourth_chart').style.display='none';
+        document.querySelector('#first_fullsize').style.display='inline';
+        document.querySelector('#second_fullsize').style.display='none';
+        document.querySelector('#third_fullsize').style.display='none';
+        document.querySelector('#fourth_fullsize').style.display='none';
+        first_canvas();">
+
+      <input type="image" id="second_cam" src="../static/img/cctv.jpg" style="display: inline; width: 100%; border: 2px solid black;" onclick="
+        document.querySelector('#first_chart').style.display='none';
+        document.querySelector('#second_chart').style.display='none';
+        document.querySelector('#third_chart').style.display='none';
+        document.querySelector('#fourth_chart').style.display='none';
+        document.querySelector('#first_fullsize').style.display='none';
+        document.querySelector('#second_fullsize').style.display='inline';
+        document.querySelector('#third_fullsize').style.display='none';
+        document.querySelector('#fourth_fullsize').style.display='none';
+        second_canvas();">
+
+      <input type="image" id="third_cam" src="../static/img/cctv.jpg" style="display: inline; width: 100%; border: 2px solid black;" onclick="
+        document.querySelector('#first_chart').style.display='none';
+        document.querySelector('#second_chart').style.display='none';
+        document.querySelector('#third_chart').style.display='none';
+        document.querySelector('#fourth_chart').style.display='none';
+        document.querySelector('#first_fullsize').style.display='none';
+        document.querySelector('#second_fullsize').style.display='none';
+        document.querySelector('#third_fullsize').style.display='inline';
+        document.querySelector('#fourth_fullsize').style.display='none';
+        third_canvas();">
+
+      <input type="image" id="fourth_cam" src="../static/img/cctv.jpg" style="display: inline; width: 100%; border: 2px solid black;" onclick="
+        document.querySelector('#first_chart').style.display='none';
+        document.querySelector('#second_chart').style.display='none';
+        document.querySelector('#third_chart').style.display='none';
+        document.querySelector('#fourth_chart').style.display='none';
+        document.querySelector('#first_fullsize').style.display='none';
+        document.querySelector('#second_fullsize').style.display='none';
+        document.querySelector('#third_fullsize').style.display='none';
+        document.querySelector('#fourth_fullsize').style.display='inline';
+        fourth_canvas();">
+    </div>
+
+    <div class="chart" style="border: 4px solid red;">
+      <canvas id="first_chart" style="display: inline; width: 100%; height: 25%; border: 2px solid black;"></canvas>
+      <canvas id="second_chart" style="display: inline; width: 100%; height: 25%; border: 2px solid black;"></canvas>
+      <canvas id="third_chart" style="display: inline; width: 100%; height: 25%; border: 2px solid black;"></canvas>
+      <canvas id="fourth_chart" style="display: inline; width: 100%; height: 25%; border: 2px solid black;"></canvas>
+
+      <canvas id="first_fullsize" style="display: none; width: 100%; height: 100%; border: 2px solid black;"></canvas>
+      <canvas id="second_fullsize" style="display: none; width: 100%; height: 100%; border: 2px solid black;"></canvas>
+      <canvas id="third_fullsize" style="display: none; width: 100%; height: 100%; border: 2px solid black;"></canvas>
+      <canvas id="fourth_fullsize" style="display: none; width: 100%; height: 100%; border: 2px solid black;"></canvas>
+    </div>
+  </div>
+
+  <div class="section" style="display: grid; margin-top: 10px; grid-template-columns: 1fr 3fr;">
+    <div class="log" style="border: 4px solid green;">
+      <h1>Log</h1>
+    </div>
+    <div class="picture" style="display: grid; border: 4px solid purple; grid-template-columns: repeat(4, 1fr);">
+      <img src="../static/img/picture_1.jpg" style="display: inline; width: 100%; border: 2px solid black;">
+      <img src="../static/img/picture_2.jpg" style="display: inline; width: 100%; border: 2px solid black;">
+      <img src="../static/img/picture_3.jpg" style="display: inline; width: 100%; border: 2px solid black;">
+      <img src="../static/img/picture_4.jpg" style="display: inline; width: 100%; border: 2px solid black;">
+  </div>
+
+  <!-- 부트스트랩 -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  <!-- 차트 -->
+  <script>
+    first_canvas();
+    second_canvas();
+    third_canvas();
+    fourth_canvas();
+
+    function first_canvas() {
+      var ctx = document.getElementById('first_chart').getContext('2d');
+      var chart = new Chart(
+        ctx, {
+          type: 'line',
+          data: {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            datasets: [{
+                label: '유동인구',
+                backgroundColor: 'transparent',
+                borderColor: 'black',
+                data: [0, 10, 5, 2, 20, 30, 45]
+              },
+              {
+                label: '마스크 미착용',
+                backgroundColor: 'transparent',
+                borderColor: 'blue',
+                data: [45, 30, 20, 2, 5, 10, 0]
+              },
+              {
+                label: '온도 이상',
+                backgroundColor: 'transparent',
+                borderColor: 'red',
+                data: [0, 10, 20, 30, 20, 10, 0]
+              }
+            ]
+          },
+          options: {
+            responsive: false,
+            title: {
+              display: true,
+              text: 'CAM_1',
+              position: 'top'
+            },
+            legend: {
+              display: true,
+              position: 'right'
+            }
+          }
+        });
+
+        var ctx_full = document.getElementById('first_fullsize').getContext('2d');
+        var chart_full = new Chart(
+          ctx_full, {
+            type: 'line',
+            data: {
+              labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+              datasets: [{
+                  label: '유동인구',
+                  backgroundColor: 'transparent',
+                  borderColor: 'black',
+                  data: [0, 10, 5, 2, 20, 30, 45]
+                },
+                {
+                  label: '마스크 미착용',
+                  backgroundColor: 'transparent',
+                  borderColor: 'blue',
+                  data: [45, 30, 20, 2, 5, 10, 0]
+                },
+                {
+                  label: '온도 이상',
+                  backgroundColor: 'transparent',
+                  borderColor: 'red',
+                  data: [0, 10, 20, 30, 20, 10, 0]
+                }
+              ]
+            },
+            options: {
+              responsive: false,
+              title: {
+                display: true,
+                text: 'CAM_1',
+                position: 'top'
+              },
+              legend: {
+                display: true,
+                position: 'right'
+              }
+            }
+          });
+    }
+    function second_canvas() {
+      var ctx = document.getElementById('second_chart').getContext('2d');
+      var chart = new Chart(
+        ctx, {
+          type: 'line',
+          data: {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            datasets: [{
+                label: '유동인구',
+                backgroundColor: 'transparent',
+                borderColor: 'black',
+                data: [0, 10, 5, 2, 20, 30, 45]
+              },
+              {
+                label: '마스크 미착용',
+                backgroundColor: 'transparent',
+                borderColor: 'blue',
+                data: [45, 30, 20, 2, 5, 10, 0]
+              },
+              {
+                label: '온도 이상',
+                backgroundColor: 'transparent',
+                borderColor: 'red',
+                data: [0, 10, 20, 30, 20, 10, 0]
+              }
+            ]
+          },
+          options: {
+            responsive: false,
+            title: {
+              display: true,
+              text: 'CAM_2',
+              position: 'top'
+            },
+            legend: {
+              display: true,
+              position: 'right'
+            }
+          }
+        });
+
+        var ctx_full = document.getElementById('second_fullsize').getContext('2d');
+        var chart_full = new Chart(
+          ctx_full, {
+            type: 'line',
+            data: {
+              labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+              datasets: [{
+                  label: '유동인구',
+                  backgroundColor: 'transparent',
+                  borderColor: 'black',
+                  data: [0, 10, 5, 2, 20, 30, 45]
+                },
+                {
+                  label: '마스크 미착용',
+                  backgroundColor: 'transparent',
+                  borderColor: 'blue',
+                  data: [45, 30, 20, 2, 5, 10, 0]
+                },
+                {
+                  label: '온도 이상',
+                  backgroundColor: 'transparent',
+                  borderColor: 'red',
+                  data: [0, 10, 20, 30, 20, 10, 0]
+                }
+              ]
+            },
+            options: {
+              responsive: false,
+              title: {
+                display: true,
+                text: 'CAM_2',
+                position: 'top'
+              },
+              legend: {
+                display: true,
+                position: 'right'
+              }
+            }
+          });
+    }
+
+    function third_canvas() {
+      var ctx = document.getElementById('third_chart').getContext('2d');
+      var chart = new Chart(
+        ctx, {
+          type: 'line',
+          data: {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            datasets: [{
+                label: '유동인구',
+                backgroundColor: 'transparent',
+                borderColor: 'black',
+                data: [0, 10, 5, 2, 20, 30, 45]
+              },
+              {
+                label: '마스크 미착용',
+                backgroundColor: 'transparent',
+                borderColor: 'blue',
+                data: [45, 30, 20, 2, 5, 10, 0]
+              },
+              {
+                label: '온도 이상',
+                backgroundColor: 'transparent',
+                borderColor: 'red',
+                data: [0, 10, 20, 30, 20, 10, 0]
+              }
+            ]
+          },
+          options: {
+            responsive: false,
+            title: {
+              display: true,
+              text: 'CAM_3',
+              position: 'top'
+            },
+            legend: {
+              display: true,
+              position: 'right'
+            }
+          }
+        });
+
+        var ctx_full = document.getElementById('third_fullsize').getContext('2d');
+        var chart_full = new Chart(
+          ctx_full, {
+            type: 'line',
+            data: {
+              labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+              datasets: [{
+                  label: '유동인구',
+                  backgroundColor: 'transparent',
+                  borderColor: 'black',
+                  data: [0, 10, 5, 2, 20, 30, 45]
+                },
+                {
+                  label: '마스크 미착용',
+                  backgroundColor: 'transparent',
+                  borderColor: 'blue',
+                  data: [45, 30, 20, 2, 5, 10, 0]
+                },
+                {
+                  label: '온도 이상',
+                  backgroundColor: 'transparent',
+                  borderColor: 'red',
+                  data: [0, 10, 20, 30, 20, 10, 0]
+                }
+              ]
+            },
+            options: {
+              responsive: false,
+              title: {
+                display: true,
+                text: 'CAM_3',
+                position: 'top'
+              },
+              legend: {
+                display: true,
+                position: 'right'
+              }
+            }
+          });
+    }
+    function fourth_canvas() {
+      var ctx = document.getElementById('fourth_chart').getContext('2d');
+      var chart = new Chart(
+        ctx, {
+          type: 'line',
+          data: {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            datasets: [{
+                label: '유동인구',
+                backgroundColor: 'transparent',
+                borderColor: 'black',
+                data: [0, 10, 5, 2, 20, 30, 45]
+              },
+              {
+                label: '마스크 미착용',
+                backgroundColor: 'transparent',
+                borderColor: 'blue',
+                data: [45, 30, 20, 2, 5, 10, 0]
+              },
+              {
+                label: '온도 이상',
+                backgroundColor: 'transparent',
+                borderColor: 'red',
+                data: [0, 10, 20, 30, 20, 10, 0]
+              }
+            ]
+          },
+          options: {
+            responsive: false,
+            title: {
+              display: true,
+              text: 'CAM_4',
+              position: 'top'
+            },
+            legend: {
+              display: true,
+              position: 'right'
+            }
+          }
+        });
+
+        var ctx_full = document.getElementById('fourth_fullsize').getContext('2d');
+        var chart_full = new Chart(
+          ctx_full, {
+            type: 'line',
+            data: {
+              labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+              datasets: [{
+                  label: '유동인구',
+                  backgroundColor: 'transparent',
+                  borderColor: 'black',
+                  data: [0, 10, 5, 2, 20, 30, 45]
+                },
+                {
+                  label: '마스크 미착용',
+                  backgroundColor: 'transparent',
+                  borderColor: 'blue',
+                  data: [45, 30, 20, 2, 5, 10, 0]
+                },
+                {
+                  label: '온도 이상',
+                  backgroundColor: 'transparent',
+                  borderColor: 'red',
+                  data: [0, 10, 20, 30, 20, 10, 0]
+                }
+              ]
+            },
+            options: {
+              responsive: false,
+              title: {
+                display: true,
+                text: 'CAM_4',
+                position: 'top'
+              },
+              legend: {
+                display: true,
+                position: 'right'
+              }
+            }
+          });
+    }
+  </script>
+</body>
+
+</html>
